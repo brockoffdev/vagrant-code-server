@@ -2,9 +2,10 @@
 # vi: set ft=ruby :
 
 # Config Github Settings
-github_username = "fideloper"
-github_repo     = "Vaprobash"
-github_branch   = "1.4.4"
+
+github_username = "olegshulyakov"
+github_repo     = "vagrant-code-server"
+github_branch   = "master"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
 # Because this:https://developer.github.com/changes/2014-12-08-removing-authorizations-token/
@@ -13,7 +14,7 @@ github_pat          = ""
 
 # Server Configuration
 
-hostname        = "vaprobash.dev"
+hostname        = "code-server"
 
 # Set a local private network IP address.
 # See http://en.wikipedia.org/wiki/Private_network for explanation
@@ -22,9 +23,9 @@ hostname        = "vaprobash.dev"
 #   172.16.0.1  - 172.31.255.254
 #   192.168.0.1 - 192.168.255.254
 server_ip             = "192.168.22.10"
-server_cpus           = "1"   # Cores
-server_memory         = "384" # MB
-server_swap           = "768" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
+server_cpus           = "2"   # Cores
+server_memory         = "2048" # MB
+server_swap           = "4096" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
 
 # UTC        for Universal Coordinated Time
 # EST        for Eastern Standard Time
@@ -94,7 +95,7 @@ Vagrant.configure("2") do |config|
   # Set server to Ubuntu 14.04
   config.vm.box = "bento/ubuntu-16.04"
 
-  config.vm.define "Vaprobash" do |vapro|
+  config.vm.define "code-server" do |vapro|
   end
 
   if Vagrant.has_plugin?("vagrant-hostmanager")
@@ -121,10 +122,7 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
 
   # Use NFS for the shared folder
-  config.vm.synced_folder ".", "/vagrant",
-    id: "core",
-    :nfs => true,
-    :mount_options => ['nolock,vers=3,udp,noatime,actimeo=2,fsc']
+  config.vm.synced_folder ".", "/vagrant"
 
   # Replicate local .gitconfig file if it exists
   if File.file?(File.expand_path("~/.gitconfig"))
@@ -189,7 +187,7 @@ Vagrant.configure("2") do |config|
     provider.size = '512mb'
   end
 
-  ####
+  ##########
   # Base Items
   ##########
 
@@ -211,7 +209,7 @@ Vagrant.configure("2") do |config|
   # Provision Docker
   # config.vm.provision "shell", path: "#{github_url}/scripts/docker.sh", args: "permissions"
 
-  ####
+  ##########
   # Web Servers
   ##########
 
@@ -222,7 +220,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/nginx.sh", args: [server_ip, public_folder, hostname, github_url, php_version]
 
 
-  ####
+  ##########
   # Databases
   ##########
 
@@ -253,7 +251,7 @@ Vagrant.configure("2") do |config|
   # Provision Neo4J
   # config.vm.provision "shell", path: "#{github_url}/scripts/neo4j.sh"
 
-  ####
+  ##########
   # Search Servers
   ##########
 
@@ -263,7 +261,7 @@ Vagrant.configure("2") do |config|
   # Install SphinxSearch
   # config.vm.provision "shell", path: "#{github_url}/scripts/sphinxsearch.sh", args: [sphinxsearch_version]
 
-  ####
+  ##########
   # Search Server Administration (web-based)
   ##########
 
@@ -273,7 +271,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/elastichq.sh"
 
 
-  ####
+  ##########
   # In-Memory Stores
   ##########
 
@@ -288,7 +286,7 @@ Vagrant.configure("2") do |config|
   # NOTE: It is safe to run this to add persistence even if originally provisioned without persistence
 
 
-  ####
+  ##########
   # Utility (queue)
   ##########
 
@@ -310,7 +308,7 @@ Vagrant.configure("2") do |config|
   # Install RabbitMQ
   # config.vm.provision "shell", path: "#{github_url}/scripts/rabbitmq.sh", args: [rabbitmq_user, rabbitmq_password]
 
-  ####
+  ##########
   # Additional Languages
   ##########
 
@@ -323,7 +321,7 @@ Vagrant.configure("2") do |config|
   # Install Go Version Manager (GVM)
   # config.vm.provision "shell", path: "#{github_url}/scripts/go.sh", privileged: false, args: [go_version]
 
-  ####
+  ##########
   # Frameworks and Tooling
   ##########
 
@@ -352,7 +350,7 @@ Vagrant.configure("2") do |config|
   # Install Android
   # config.vm.provision "shell", path: "#{github_url}/scripts/android.sh"
 
-  ####
+  ##########
   # Local Scripts
   # Any local scripts you may want to run post-provisioning.
   # Add these to the same directory as the Vagrantfile.
