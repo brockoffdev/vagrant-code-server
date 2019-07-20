@@ -90,6 +90,8 @@ sphinxsearch_version  = "rel22" # rel20, rel21, rel22, beta, daily, stable
 
 elasticsearch_version = "2.3.1" # 5.0.0-alpha1, 2.3.1, 2.2.2, 2.1.2, 1.7.5
 
+codeserver_version = "1.1156-vsc1.33.1"
+
 Vagrant.configure("2") do |config|
 
   # Set server to Ubuntu 14.04
@@ -198,7 +200,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
 
   # Provision PHP
-  config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, hhvm, php_version]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, hhvm, php_version]
 
   # Enable MSSQL for PHP
   # config.vm.provision "shell", path: "#{github_url}/scripts/mssql.sh"
@@ -349,6 +351,9 @@ Vagrant.configure("2") do |config|
 
   # Install Android
   # config.vm.provision "shell", path: "#{github_url}/scripts/android.sh"
+
+  # Install Code Server
+  config.vm.provision "shell", path: "#{github_url}/scripts/codeserver.sh", privileged: false, args: [codeserver_version]
 
   ##########
   # Local Scripts
