@@ -15,7 +15,7 @@ sudo update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 echo ">>> Installing Base Packages"
 
 if [[ -z $1 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
+    github_url="https://raw.githubusercontent.com/olegshulyakov/vagrant-code-server/master"
 else
     github_url="$1"
 fi

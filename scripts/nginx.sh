@@ -29,7 +29,7 @@ else
 fi
 
 if [[ -z $4 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
+    github_url="https://raw.githubusercontent.com/olegshulyakov/vagrant-code-server/master"
 else
     github_url="$4"
 fi

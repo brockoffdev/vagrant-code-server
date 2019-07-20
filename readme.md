@@ -1,10 +1,10 @@
-# Vaprobash
+# Code Server
 
-**Va**&#x200B;grant **Pro**&#x200B;visioning **Bash** Scripts
+Based on **Va**&#x200B;grant **Pro**&#x200B;visioning **Bash** Scripts
 
 [View the site and extended docs.](http://fideloper.github.io/Vaprobash/index.html)
 
-[![Build Status](https://travis-ci.org/fideloper/Vaprobash.png?branch=master)](https://travis-ci.org/fideloper/Vaprobash)
+[![Build Status](https://travis-ci.org/olegshulyakov/vagrant-code-server.png?branch=master)](https://travis-ci.org/olegshulyakov/vagrant-code-server)
 
 ## Goal
 
