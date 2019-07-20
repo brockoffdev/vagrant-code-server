@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-echo "Setting Timezone & Locale to $3 & en_US.UTF-8"
+# Update
+echo ">>> Upgrade distro"
+
+sudo apt-get update && sudo apt-get -f -y upgrade && sudo apt-get -f -y dist-upgrade
+
+echo ">>> Setting Timezone & Locale to $3 & en_US.UTF-8"
 
 sudo ln -sf /usr/share/zoneinfo/$3 /etc/localtime
 sudo apt-get install -qq language-pack-en
@@ -20,7 +25,7 @@ sudo apt-get update
 
 # Install base packages
 # -qq implies -y --force-yes
-sudo apt-get install -qq curl unzip git-core ack-grep software-properties-common build-essential cachefilesd
+sudo apt-get install -qq vim curl zip unzip git git-core ack-grep software-properties-common virtualbox-guest-dkms build-essential cachefilesd openssl
 
 
 echo ">>> Installing *.xip.io self-signed SSL"
