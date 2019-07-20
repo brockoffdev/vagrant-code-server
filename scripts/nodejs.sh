@@ -49,7 +49,7 @@ if [[ $NODE_IS_INSTALLED -ne 0 ]]; then
     fi
 
     # Install Node
-    nvm install $NODEJS_VERSION
+    nvm install --no-progress $NODEJS_VERSION
 
     # Set a default node version and start using it
     nvm alias default $NODEJS_VERSION
