@@ -11,7 +11,8 @@ END
 fi
 
 # optimize apt sources to select best mirror
+echo ">>> Selecting best apt mirror"
 perl -pi -e 's@^\s*(deb(\-src)?)\s+http://us.archive.*?\s+@\1 mirror://mirrors.ubuntu.com/mirrors.txt @g' /etc/apt/sources.list
 
 # update repositories
-sudo apt-get update
+sudo apt-get -qq update
