@@ -90,7 +90,7 @@ sphinxsearch_version  = "rel22" # rel20, rel21, rel22, beta, daily, stable
 
 elasticsearch_version = "2.3.1" # 5.0.0-alpha1, 2.3.1, 2.2.2, 2.1.2, 1.7.5
 
-codeserver_version = "1.1156-vsc1.33.1"
+codeserver_version = "1.1156-vsc1.33.1" # Options: 1.1119-vsc1.33.1 | 1.1140-vsc1.33.1 | 1.1156-vsc1.33.1
 
 Vagrant.configure("2") do |config|
 
@@ -126,6 +126,7 @@ Vagrant.configure("2") do |config|
 
   # Use NFS for the shared folder
   config.vm.synced_folder ".", "/vagrant"
+  config.vm.synced_folder "./projects", "/home/vagrant/projects"
 
   # Replicate local .gitconfig file if it exists
   if File.file?(File.expand_path("~/.gitconfig"))

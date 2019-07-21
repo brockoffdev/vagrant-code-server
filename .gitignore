@@ -8,3 +8,7 @@ play
 
 # logs
 logs/*.log
+
+# projects
+projects/*
+!projects/.gitkeep
