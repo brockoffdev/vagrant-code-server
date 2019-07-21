@@ -2,15 +2,17 @@
 
 # Update
 echo ">>> Upgrade distro"
+sudo apt-get -qq update && sudo apt-get -f -y -qq upgrade && sudo apt-get -f -y -qq dist-upgrade
 
-sudo apt-get update && sudo apt-get -f -y upgrade && sudo apt-get -f -y dist-upgrade
-
-echo ">>> Setting Timezone & Locale to $3 & en_US.UTF-8"
-
+echo ">>> Setting Timezone $3"
 sudo ln -sf /usr/share/zoneinfo/$3 /etc/localtime
-sudo apt-get install -qq language-pack-en
-sudo locale-gen en_US
-sudo update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+
+if [[ $(locale | grep LANGUAGE | cut -d= -f2 | cut -d_ -f1) -ne "en" ]]; then
+    echo ">>> Setting Locale to en_US.UTF-8"
+    sudo apt-get install -qq language-pack-en
+    sudo locale-gen en_US
+    sudo update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+fi
 
 echo ">>> Installing Base Packages"
 
@@ -20,16 +22,26 @@ else
     github_url="$1"
 fi
 
-# Update
-sudo apt-get update
-
 # Install base packages
 # -qq implies -y --force-yes
-sudo apt-get install -qq vim curl zip unzip git git-core ack-grep software-properties-common virtualbox-guest-dkms build-essential cachefilesd openssl
+sudo apt-get install -qq vim \
+    curl \
+    wget \
+    htop \
+    zip \
+    unzip \
+    git \
+    git-core \
+    ack-grep \
+    software-properties-common \
+    virtualbox-guest-dkms \
+    build-essential \
+    cachefilesd \
+    openssl \
+    net-tools \
+    locales
 
-
-echo ">>> Installing *.xip.io self-signed SSL"
-
+# Install self-signed SSL
 SSL_DIR="/etc/ssl/xip.io"
 DOMAIN="*.xip.io"
 PASSPHRASE="vaprobash"
@@ -43,12 +55,18 @@ commonName=$DOMAIN
 organizationalUnitName=
 emailAddress=
 "
+if [[ ! -d "/home/vagrant/code-server" ]]; then
+    echo ">>> Installing *.xip.io self-signed SSL"
 
-sudo mkdir -p "$SSL_DIR"
+    sudo mkdir -p "$SSL_DIR"
 
-sudo openssl genrsa -out "$SSL_DIR/xip.io.key" 1024
-sudo openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -key "$SSL_DIR/xip.io.key" -out "$SSL_DIR/xip.io.csr" -passin pass:$PASSPHRASE
-sudo openssl x509 -req -days 365 -in "$SSL_DIR/xip.io.csr" -signkey "$SSL_DIR/xip.io.key" -out "$SSL_DIR/xip.io.crt"
+    sudo openssl genrsa -out "$SSL_DIR/xip.io.key" 1024
+    sudo openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -key "$SSL_DIR/xip.io.key" -out "$SSL_DIR/xip.io.csr" -passin pass:$PASSPHRASE
+    sudo openssl x509 -req -days 365 -in "$SSL_DIR/xip.io.csr" -signkey "$SSL_DIR/xip.io.key" -out "$SSL_DIR/xip.io.crt"
+
+else
+    echo ">>> Self-signed SSL is already installed"
+fi
 
 # Setting up Swap
 
@@ -85,4 +103,6 @@ fi
 shopt -u nocasematch
 
 # Enable cachefilesd
-echo "RUN=yes" > /etc/default/cachefilesd
+if [[ ! -f "/etc/default/cachefilesd" ]]; then
+    sudo echo "RUN=yes" >/etc/default/cachefilesd
+fi
