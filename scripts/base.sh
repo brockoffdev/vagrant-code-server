@@ -55,7 +55,7 @@ commonName=$DOMAIN
 organizationalUnitName=
 emailAddress=
 "
-if [[ ! -d "/home/vagrant/code-server" ]]; then
+if [[ ! -d "$SSL_DIR" ]]; then
     echo ">>> Installing *.xip.io self-signed SSL"
 
     sudo mkdir -p "$SSL_DIR"
