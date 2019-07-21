@@ -15,7 +15,7 @@ if [[ ! -d "/home/vagrant/code-server" ]]; then
     echo ">>> Installing Code Server ${CODE_SERVER_VERSION}"
     wget --quiet "${CODE_SERVER_DOWNLOAD_URL}"
     tar xzf code-server${CODE_SERVER_VERSION}-linux-x64.tar.gz
-    mv code-server${CODE_SERVER_VERSION}-linux-x64.tar.gz code-server
+    mv code-server${CODE_SERVER_VERSION}-linux-x64 code-server
     rm -f code-server${CODE_SERVER_VERSION}-linux-x64.tar.gz
 else
     echo "Code Server is already installed."
