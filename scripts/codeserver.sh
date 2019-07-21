@@ -21,5 +21,22 @@ else
     echo "Code Server is already installed."
 fi
 
+if [[ ! -d "/home/vagrant/.code-server-data" ]]; then
+    mkdir /home/vagrant/.code-server-data
+fi
+
+if [[ ! -d "/home/vagrant/.code-server-extensions" ]]; then
+    mkdir /home/vagrant/.code-server-extensions
+fi
+
 # Start Code-Server
-/home/vagrant/code-server/code-server --cert=/etc/ssl/xip.io/xip.io.crt --cert-key=/etc/ssl/xip.io/xip.io.key --no-auth --disable-telemetry --user-data-dir=/home/vagrant/projects &>/vagrant/logs/code-server.log &disown;
+cd /home/vagrant/projects
+/home/vagrant/code-server/code-server \
+    --cert=/etc/ssl/xip.io/xip.io.crt \
+    --cert-key=/etc/ssl/xip.io/xip.io.key \
+    --no-auth \
+    --disable-telemetry \
+    --user-data-dir=/home/vagrant/.code-server-data \
+    --extensions-dir=/home/vagrant/.code-server-extensions \
+    &>/vagrant/logs/code-server.log &disown
+cd ~
