@@ -5,3 +5,6 @@ play
 
 # editor backup files
 *~
+
+# logs
+logs/*.log

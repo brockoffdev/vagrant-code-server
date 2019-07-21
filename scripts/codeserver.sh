@@ -20,3 +20,6 @@ if [[ ! -d "/home/vagrant/code-server" ]]; then
 else
     echo "Code Server is already installed."
 fi
+
+# Start Code-Server
+/home/vagrant/code-server/code-server --cert=/etc/ssl/xip.io/xip.io.crt --cert-key=/etc/ssl/xip.io/xip.io.key --no-auth --disable-telemetry --user-data-dir=/home/vagrant/projects &>/vagrant/logs/code-server.log &disown;
