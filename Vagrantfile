@@ -94,7 +94,7 @@ codeserver_version = "1.1156-vsc1.33.1" # Options: 1.1119-vsc1.33.1 | 1.1140-vsc
 
 Vagrant.configure("2") do |config|
 
-  # Set server to Ubuntu 14.04
+  # Set server to Ubuntu 16.04
   config.vm.box = "bento/ubuntu-16.04"
 
   config.vm.define "code-server" do |vapro|
@@ -200,6 +200,9 @@ Vagrant.configure("2") do |config|
 
   # optimize base box
   config.vm.provision "shell", name: "optimization", path: "#{github_url}/scripts/base_box_optimizations.sh", run: 'once', privileged: true
+
+  # brew
+  config.vm.provision "shell", name: "brew", path: "#{github_url}/scripts/brew.sh", run: 'once', privileged: false
 
   # Provision PHP
   # config.vm.provision "shell", name: "php", path: "#{github_url}/scripts/php.sh", args: [php_timezone, hhvm, php_version]
